@@ -14,6 +14,7 @@ CTCを使用した、連続音声認識の実験を行う。
 
 【実行手順】
 "01_get_token.py"⇨"encoder.py"⇨"my_model.py"⇨"02_train_ctc.py"⇨"03_decode_ctc.py"⇨"levenshtein.py"⇨"04_scoring.py"
+CTCの音声認識のみを実行する場合は、"levenshtein.py", "04_scoring.py"は実行しなくてもよい。
 
 
 【コード紹介】
