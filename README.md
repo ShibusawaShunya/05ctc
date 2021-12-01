@@ -1,3 +1,5 @@
+CTCを使用した、連続音声認識の実験を行う。
+
 １　トークンリストとラベルの作成
 ２　CTCの学習
 ３　CTCによる音声認識
@@ -8,6 +10,7 @@
 以降で紹介するソースコードは"05ctc"フォルダ内で実行することを想定している。
 
 本ソースコードで必要となるlevenshteinのインストールは"pip"を使用せずに"conda install -c conda-forge python-levenshtein"を使用して行う。
+
 
 【実行手順】
 "01_get_token.py"⇨"encoder.py"⇨"my_model.py"⇨"02_train_ctc.py"⇨"03_decode_ctc.py"⇨"levenshtein.py"⇨"04_scoring.py"
@@ -52,10 +55,13 @@ DataLoaderからミニバッチを取り出した後、ミニバッチ内のデ�
 "03_decode_ctc.py"
 出力に対して連続する同一トークンとブランクを削除したものを音声認識結果とする。その処理を行うソースコード。
 "cic_simple_decode"は入力されたフレーム単位の出力系列に対して、連続する同一トークンと文楽を削除し、最終的な音声認識結果を出力する関数。学習済みのモデルに評価データのミニバッチを入力し、
-その出力"outputs"に対して、"_, hyp_per_frame = torch.max［outputs［idx］, 1］"とすることで
+その出力"outputs"に対して、"_, hyp_per_frame = torch.max［outputs［idx］, 1］"とすることで、フレームごとに最も確率の高いトークンを"hyp_per_frame"に出力している。
+その後、"hyp_per_frame"を"ctc_simple_decode"に入力することで、最終的な音声認識結果を得ている。
 
 
 "levenshtein.py"
+レーベンシュタイン距離と各誤りの数をカウントする関数のソースコード。
 
 
 "04_scoring.py"
+CTCの音声認識結果を評価するソースコード。
